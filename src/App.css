@@ -36,3 +36,40 @@
     transform: rotate(360deg);
   }
 }
+
+
+.main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.searchBar{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.searchBar input{
+  width: 100%;
+}
+
+.productTable{
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+.productTable td , .productTable th{
+  border: 1px solid black;
+}
+
+.productTable td{
+  padding-right: 50px;
+}
+
+.searchBar, .productTable{
+  width: 300px;
+  max-width: 90%;
+}
