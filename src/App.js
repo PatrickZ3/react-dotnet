@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 
 const PRODUCTS = [
@@ -32,7 +33,7 @@ function ProductRow({ product }) {
   );
 }
 
-function ProductTable({ products }) {
+function ProductTable({ products, filterText, inStockOnly }) {
   // set empty array for the divs
   // set null to last category to keep track the categories
   // go through products
@@ -45,6 +46,14 @@ function ProductTable({ products }) {
   let lastCategory = null;
 
   products.forEach((product) => {
+    if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
+      return;
+    }
+
+    if (inStockOnly && !product.stocked) {
+      return;
+    }
+
     if (product.category !== lastCategory) {
       rows.push(
         <ProductCategoryRow
@@ -71,18 +80,36 @@ function ProductTable({ products }) {
   );
 }
 
-function SearchBar() {
+function SearchBar({
+  filterText,
+  inStockOnly,
+  onFilterTextChange,
+  onInStockOnlyChange,
+}) {
   return (
     <form className="searchBar">
-      <input type="text" placeholder="Search..."></input>
-      <label className="label">
-        <input type="checkbox" /> Only show products in stock
+      <input
+        type="text"
+        value={filterText}
+        placeholder="Search..."
+        onChange={(e) => onFilterTextChange(e.target.value)}
+      />
+      <label className="inStockLabel">
+        <input
+          type="checkbox"
+          checked={inStockOnly}
+          onChange={(e) => onInStockOnlyChange(e.target.checked)}
+        />{" "}
+        Only show products in stock
       </label>
     </form>
   );
 }
 
 function FilterableProductTable({ products }) {
+  const [filterText, setFilterText] = useState("");
+  const [inStockOnly, setInStockOnly] = useState(false);
+
   return (
     <div className="main">
       <div
@@ -92,8 +119,17 @@ function FilterableProductTable({ products }) {
           alignItems: "flex-start",
         }}
       >
-        <SearchBar />
-        <ProductTable products={products} />
+        <SearchBar
+          filterText={filterText}
+          inStockOnly={inStockOnly}
+          onFilterTextChange={setFilterText}
+          onInStockOnlyChange={setInStockOnly}
+        />
+        <ProductTable
+          products={products}
+          filterText={filterText}
+          inStockOnly={inStockOnly}
+        />
       </div>
     </div>
   );
