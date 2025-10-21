@@ -40,10 +40,33 @@
 
 .main{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  gap: 2rem;
+  
+}
+
+.left-main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: 2rem;
+}
+
+.right-main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: 2rem;
+  gap: 1rem;
 }
 
 .searchBar{
@@ -57,8 +80,7 @@
 }
 
 .productTable{
-  border: 1px solid black;
-  border-radius: 2px;
+ 
 }
 
 .productTable td , .productTable th{
@@ -71,9 +93,14 @@
 
 .searchBar, .productTable{
   width: 300px;
-  max-width: 90%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
+.searchBar input {
+  width: 100%;
+  box-sizing: border-box;
+}
 
 .inStockLabel {
   display: flex;
@@ -89,4 +116,31 @@
   width: 16px;
   height: 16px;
   cursor: pointer;
+}
+
+.product-form{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.textBox{  
+  width: 96%;
+  margin-top: 0.5rem;
+}
+
+.saveButton{
+  width: 100%;
+}
+
+.deleteButton{
+  align-items: center;
+  cursor: pointer;
+}
+
+.deleteCell{
+  border: none !important;
+  padding-right: 0 !important;
+  padding-left: 0.3rem;
 }

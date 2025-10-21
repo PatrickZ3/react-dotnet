@@ -1,38 +1,33 @@
 import ProductRow from "./ProductRow"
 import ProductCategoryRow from "./ProductCategoryRow"
 
-export default function ProductTable({ products, filterText, inStockOnly }) {
-    // set empty array for the divs
-    // set null to last category to keep track the categories
-    // go through products
-    // <X> if function if its first category (products.category !== lastCategory) then add just the category to the empty array
-    // then below that we just add normally the proucts to row
-    // set lastcategory to products.caterogyr
-    // repeat <X> function because the next products.category will get triggered the moment it is a different products.category
+export default function ProductTable({ products, filterText, inStockOnly, onDelete }) {
+
+    const filteredProducts = products.filter((product) => {
+      if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1 ){
+        return false;
+      }
+      if (inStockOnly && !product.stocked){
+        return false;
+      }
+      return true;
+    });
+
+    const groupedProducts = {};
+    filteredProducts.forEach((product) => {
+      if (!groupedProducts[product.category]){
+        groupedProducts[product.category] = [];
+      }
+      groupedProducts[product.category].push(product);
+    });
   
     const rows = [];
-    let lastCategory = null;
-  
-    products.forEach((product) => {
-      if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
-        return;
-      }
-  
-      if (inStockOnly && !product.stocked) {
-        return;
-      }
-  
-      if (product.category !== lastCategory) {
-        rows.push(
-          <ProductCategoryRow
-            category={product.category}
-            key={product.category}
-          />
-        );
-      }
-  
-      rows.push(<ProductRow product={product} key={product.name} />);
-      lastCategory = product.category;
+    
+    Object.keys(groupedProducts).forEach((category) => {
+      rows.push(<ProductCategoryRow category={category} key={category}/>);
+      groupedProducts[category].forEach((product) => {
+        rows.push(<ProductRow product={product} key={product.name} onDelete={onDelete}/>)
+      });
     });
   
     return (

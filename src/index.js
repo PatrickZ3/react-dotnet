@@ -7,7 +7,7 @@ import { getProducts } from "./ProductsContainer";
 
 async function startApp() {
   const products = await getProducts();
-  console.log("Fetched Products:", products);
+  console.log("INDEX.JS Fetched Products:", products);
 
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(

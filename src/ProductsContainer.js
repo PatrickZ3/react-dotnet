@@ -4,10 +4,10 @@ export async function getProducts(){
     try{
         const response = await fetch("http://localhost:5201/api/product")
         const data = await response.json();
-        console.log("Retrieved data:", data)
+        console.log("PRODUCTSCONTAINER Retrieved data:", data)
         return data;
     }catch(error){
-        console.log("Error fetching Products", error);
+        console.log("PRODUCTSCONTAINER Error fetching Products", error);
         return [];
     }
 
